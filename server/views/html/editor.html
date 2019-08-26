@@ -1,0 +1,71 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"><title>Marked in the browser</title><link rel=stylesheet type=text/css href=/css/markdown.css><link rel=stylesheet type=text/css href=/css/editor.css></head><body><header class=header><input type=text class=title-input value="<%= title %>" id=title-input placeholder=请输入文章标题...><div class=right-box><div class=toggle-btn>发布 <span class=triangle></span></div><div class=logo style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2019/2/22/1691345beff442e9?imageView2/1/w/64/h/64/q/85/interlace/1&quot;);"></div></div></header><div class=content><div class=editor><textarea id=input><%= markdown %></%=></textarea></div><div class=markdown-section id=preview></div></div><div class=publish-popup><div class=triangle></div><div class="font-serif publish-title">标签</div><input type=text placeholder="添加标签，多个标签以 “,” 隔开" class=publish-tags value="<%= tags.join(',') %>"> <button class=publish-btn>确定并发布</button></div><script src=https://cdn.jsdelivr.net/npm/marked/marked.min.js></script><script src=/js/prism.js></script><script src=/js/base.js></script><script>
+    function $(select) {
+      return document.querySelector(select);
+    }
+
+    //转换md
+    function transformMd() {
+      $('#preview').innerHTML = marked($('#input').value);
+    }
+
+    transformMd();
+
+    $('#input').addEventListener('input', transformMd);
+    $('.publish-btn').addEventListener('click', request);
+
+    $('.toggle-btn').addEventListener('click', function (e) {
+      if (~this.className.indexOf('active')) {
+        this.classList.remove('active');
+        $('.publish-popup').style.display = 'none';
+      } else {
+        this.classList.add('active');
+        $('.publish-popup').style.display = 'block';
+      }
+    });
+
+
+    function request() {
+      var obj = {
+        title: $('#title-input').value,
+        markdown: $('#input').value,
+        html: $('#preview').innerHTML,
+        tags: $('.publish-tags').value.split(','),
+        articleID: location.pathname.slice(8)
+      }
+      ajax({
+        url: '/articleStorage',
+        method: 'POST',
+        data: obj,
+        success: function (e) {
+          console.log(e);
+          if (e.success) {
+            location.href = '/detail/' + e.data.id;
+          }
+        },
+        fail: function (err) {
+          console.log(err);
+        }
+      })
+    }
+
+    function renderer() {
+      var origin = new marked.Renderer();
+      origin.code = function (code, lang) {
+        var hl = Prism.highlight(
+          code,
+          Prism.languages[lang] || Prism.languages.js
+        );
+        return `<pre class="language-${lang}"><code class="language-${lang}">${hl}</code></pre>`;
+      }
+      return origin;
+    }
+    marked.setOptions({
+      renderer: renderer()
+    });
+
+    //监听editor输入框，拖入文件
+    $('.editor').addEventListener(event => {
+      event.stopPropagation();
+      event.preventDefault();
+    })
+  </script></body></html>

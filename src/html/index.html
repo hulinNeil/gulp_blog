@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title><%= tag ? `${tag} - ` : '' %>CV 大师</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="keywords" content="前端,CSS,javascript,jquery,html,react,vue,webpack,uniapp,uni-app,react-native">
+  <meta name="description" content="CV大师De个人博客。记录本人工作中遇到的问题，以及经验总结和分享！">
+  <link rel="stylesheet" type="text/css" href="/css/common.css" />
+</head>
+
+<body>
+  <%- include('components/page_header'); %>
+  <div class="container">
+    <div class="container-left">
+      <% list.forEach(function(item){ %>
+      <section class="section">
+        <h5 class="section-title">
+          <a href="/detail/<%= item._id%>"><%= item.title %></a>
+        </h5>
+        <p class="section-content">摘要： <%= item.desc %></p>
+        <p class="section-info"><%= item.read_times %> 次阅读 · <%= item.create_time %> · <a
+            href="/editor/<%= item._id%>">编辑</a></p>
+      </section>
+      <% }); %>
+      <%- include('components/page_btn', {totalPage,currentPage,href}); %>
+    </div>
+    <div class="container-right">
+      <%- include('components/page_tags', {tags}); %>
+      <div class="aside-section">
+        <h5 class="section-title font-serif">阅读排行</h5>
+        <ul class="article-top">
+          <% topList.forEach(function(item,index){ %>
+          <li><a href="/detail/<%= item._id%>"><%= (index + 1) + '. ' + item.title + ` (${item.read_times})` %></a></li>
+          <% }); %>
+      </div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e525c4994cb4d7608f18865acbc51cc0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</body>
+
+</html>

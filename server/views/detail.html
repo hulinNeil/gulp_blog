@@ -1,0 +1,10 @@
+<!doctype html><html><head><title><%= title %></title><meta charset="UTF-8" /><meta name="keywords" content="<%= tags.join(',')%>"><meta property="og:description" content="<%= desc%>"><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /><link rel="stylesheet" type="text/css" href="/css/common.css" /><link rel="stylesheet" type="text/css" href="/css/markdown.css" /></head><body><%- include('components/page_header'); %><div class="container"><div class="container-left"><div class="article-title"><%= title %></div><div class="article-info"><% tags.forEach(function(value){ %><a href="/tag/<%= value %>" class="tag"><%= value %></a><% }); %><span><%= read_times %> 次阅读 ·
+            <%= create_time %> · <a href="/editor/<%= _id%>">编辑</a></span></div><div class="markdown-section" id="preview"><%- html %></div></div><div class="container-right"><%- include('components/page_tags', {tags:hot_tags}); %><div class="aside-section directory-sticky"><h5 class="section-title font-serif">目录</h5><div class="highlight-title"></div><ul class="directory"></div></div></div></div></div><script src="/js/preview.min.js" type="text/javascript" charset="utf-8"></script><script src="/js/detail.js" type="text/javascript" charset="utf-8"></script><script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e525c4994cb4d7608f18865acbc51cc0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script></body></html>

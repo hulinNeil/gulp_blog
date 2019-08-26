@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>登录</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="/css/common.css" />
+  </head>
+  <body>
+    <form class="login-from">
+      <div class="form-col">
+        <label>用户名</label>
+        <input class="from-input" type="text" placeholder="请输入用户名" id="name" />
+        <span>用户名不能为空</span>
+      </div>
+      <div class="form-col">
+        <label>密码</label>
+        <input class="from-input" type="password" placeholder="请输入密码" id="password" />
+      </div>
+      <div class="form-col button" id="login">登录</div>
+    </form>
+    <script src="/js/base.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+      (function() {
+        $('login').addEventListener('click', login);
+        window.addEventListener('keydown', function(e) {
+          e.keyCode === 13 && login();
+        });
+
+        function login() {
+          var name = $('#name').value,
+            password = $('#password').value;
+          console.log(name, password);
+          if (!name || !password) {
+            alert('用戶名或密码不能为空！');
+            return;
+          }
+          ajax({
+            url: '/login',
+            method: 'POST',
+            data: {
+              password: password,
+              name: name
+            },
+            success: function(res) {
+              console.log('success：', res);
+              if (res.success) {
+                var redirect_uri = location.search.split('redirect_uri=')[1] ? location.search.split(
+                  'redirect_uri=')[1].split('&')[0] : location.host;
+                location.href = location.protocol + '//' + redirect_uri;
+              } else {
+                alert('用戶名密码错误！')
+              }
+            }
+          })
+
+        }
+      })()
+    </script>
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e525c4994cb4d7608f18865acbc51cc0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </body>
+</html>

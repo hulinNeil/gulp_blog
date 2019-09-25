@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Article } = require('../util/mongodb');
 const getTags = require('../util/get_tags');
 const dateFtt = require('../util/util').dateFtt;
+const sendMail = require('../util/mail').sendMail;
 
 module.exports = async function detail(ctx) {
   let id = ctx.params.id;
@@ -18,6 +19,10 @@ module.exports = async function detail(ctx) {
       newResult.create_time = dateFtt(newResult.create_time, 'yyyy-MM-dd hh:mm:ss');
       newResult.hot_tags = await getTags();
       await ctx.render('detail', newResult);
+			sendMail({
+				subject:`${newResult.title}被访问`,
+				text:`内容···${new Date()}`
+			});
       return;
     }
   }

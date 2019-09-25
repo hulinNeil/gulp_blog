@@ -4,6 +4,9 @@ const serve = require('koa-static');
 const bodyParser = require('koa-bodyparser');
 const render = require('koa-ejs');
 const router = require('./routes/router');
+const monitorTimeSendMail = require('./util/mail').monitorTimeSendMail;
+
+monitorTimeSendMail();
 
 const app = new koa();
 const main = serve(path.join(__dirname + '/public'));//静态资源

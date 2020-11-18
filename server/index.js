@@ -8,6 +8,8 @@ const monitorTimeSendMail = require('./util/mail').monitorTimeSendMail;
 
 monitorTimeSendMail();
 
+console.log('=========================')
+
 const app = new koa();
 const main = serve(path.join(__dirname + '/public'));//静态资源
 

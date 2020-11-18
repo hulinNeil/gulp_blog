@@ -5,7 +5,6 @@ const {
 const getTags = require('../util/get_tags');
 const dateFtt = require('../util/util').dateFtt;
 const sendMail = require('../util/mail').sendMail;
-const logger = require('../util/logger.js');
 
 module.exports = async function detail(ctx) {
 	let id = ctx.params.id;
@@ -26,7 +25,7 @@ module.exports = async function detail(ctx) {
 			newResult.create_time = dateFtt(newResult.create_time, 'yyyy-MM-dd hh:mm:ss');
 			newResult.hot_tags = await getTags();
 			await ctx.render('detail', newResult);
-			logger.info(`${newResult.title}被访问`, `内容···${new Date()} ---${ctx.request.header['user-agent']}`);
+			console.log(`${newResult.title}被访问`, `内容···${new Date()} ---${ctx.request.header['user-agent']}`)
 			return;
 		}
 	}

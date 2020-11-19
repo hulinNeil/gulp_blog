@@ -1,4 +1,4 @@
-import Koa, { Context } from 'koa';
+import { Context } from 'koa';
 import { responseJson } from '../../utils';
 
 class VersionController {
@@ -10,7 +10,7 @@ class VersionController {
           version: '1.0.0',
           date: '2020-12-14 16:00:00',
           content: {
-            feature: `1. 初次创建服务`,
+            feature: '1. 初次创建服务',
           },
         },
       ],

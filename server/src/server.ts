@@ -4,7 +4,7 @@ import routes from './routes';
 const app = new Koa();
 routes(app);
 
-app.on('error', (err, ctx) => {
+app.on('error', (err) => {
   console.log('server error', err);
 });
 

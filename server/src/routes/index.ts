@@ -4,7 +4,7 @@ import fs from 'fs';
 
 const router = (app: Application) => {
   fs.readdirSync(__dirname).forEach(async (file) => {
-    if (file === 'index.ts') {
+    if (file.includes('index')) {
       return;
     }
     const route: Router = require(`./${file}`).default;

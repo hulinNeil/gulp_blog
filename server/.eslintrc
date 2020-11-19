@@ -1,0 +1,20 @@
+{
+  /**
+   * "off" 或 0 - Close the rules
+   * "warn" 或 1 - Open the rules,level：warn (Does not exit App),
+   * "error" 或 2 - Open the rules,level：error (Exit App)
+   */
+  "parser": "@typescript-eslint/parser",
+  "rules": {
+    "indent": [2, 2, { "SwitchCase": 1 }],
+    "camelcase": 1,
+    "block-spacing": 2,
+    "quotes": [2, "single"],
+    "semi": 2,
+    "max-len": [1, 200],
+    "no-mixed-spaces-and-tabs": 2,
+    "spaced-comment": 2,
+    "no-const-assign": 2,
+    "no-unused-vars": 1
+  }
+}

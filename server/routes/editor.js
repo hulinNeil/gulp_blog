@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Article } = require('../util/mongodb');
+const { Article } = require('../utils/mongodb');
 
 module.exports = async function editor(ctx) {
   let cookie = ctx.cookies.get('username');

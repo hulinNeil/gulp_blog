@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const {
 	Article
-} = require('../util/mongodb');
-const getTags = require('../util/get_tags');
-const dateFtt = require('../util/util').dateFtt;
-const sendMail = require('../util/mail').sendMail;
+} = require('../utils/mongodb');
+const getTags = require('../utils/get_tags');
+const dateFtt = require('../utils/util').dateFtt;
+const sendMail = require('../utils/mail').sendMail;
 
 module.exports = async function detail(ctx) {
 	let id = ctx.params.id;

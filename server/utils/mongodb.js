@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://admin:128973@127.0.0.1:27017/blog');
+// mongoose.connect('mongodb://admin:128973@127.0.0.1:27017/blog'); // 服务器
+mongoose.connect('mongodb://@127.0.0.1:27017/blog'); // 本地
 
 let db = mongoose.connection;
 // 防止Mongoose: mpromise 错误

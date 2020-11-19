@@ -1,6 +1,6 @@
-const { Article } = require('../util/mongodb');
-const getTags = require('../util/get_tags');
-const dateFtt = require('../util/util').dateFtt;
+const { Article } = require('../utils/mongodb');
+const getTags = require('../utils/get_tags');
+const dateFtt = require('../utils/util').dateFtt;
 
 module.exports = async function login(ctx) {
   const pageSize = 10;

@@ -4,7 +4,7 @@ const serve = require('koa-static');
 const bodyParser = require('koa-bodyparser');
 const render = require('koa-ejs');
 const router = require('./routes/router');
-const monitorTimeSendMail = require('./util/mail').monitorTimeSendMail;
+const monitorTimeSendMail = require('./utils/mail').monitorTimeSendMail;
 
 monitorTimeSendMail();
 

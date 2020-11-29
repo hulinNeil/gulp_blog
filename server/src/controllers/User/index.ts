@@ -1,5 +1,6 @@
 import { Context } from 'koa';
 import { responseJson } from '../../utils';
+import Users from '../../models/Users';
 
 class UserController {
   async login(ctx: Context) {
@@ -26,7 +27,12 @@ class UserController {
   }
 
   async info(ctx: Context) {
-    responseJson(ctx, 200, 'data');
+    try {
+      const ss: any = await Users.findOne({ where: { name: 'hulin' } });
+      responseJson(ctx, 200, ss.dataValues);
+    } catch (error) {
+      responseJson(ctx, 200, error);
+    }
   }
 
   async updateInfo(ctx: Context) {

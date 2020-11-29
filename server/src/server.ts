@@ -1,3 +1,4 @@
+import config from './config';
 import Koa from 'koa';
 import routes from './routes';
 import serve from 'koa-static';
@@ -27,6 +28,6 @@ app.on('error', (err) => {
   console.log('server error', err);
 });
 
-app.listen(3005, () => {
-  console.log('app is running 3005');
+app.listen(config.port, () => {
+  console.log(`App is running on ${config.port}`);
 });

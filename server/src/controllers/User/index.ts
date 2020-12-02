@@ -1,4 +1,4 @@
-import { Context } from 'koa';
+import Koa, { Context } from 'koa';
 import { responseJson } from '../../utils';
 import Users from '../../models/Users';
 
@@ -23,15 +23,26 @@ class UserController {
   }
 
   async register(ctx: Context) {
-    responseJson(ctx, 200, 'data');
+    try {
+      console.log(ctx.request.body);
+      const { name, email, phone } = ctx.request.body;
+      // 这里需要手动校验name和email是否存在，存在的话返回false，否则会直接抛出错误
+      const user = await Users.create({ name, email, phone });
+      console.log(user);
+      return user ? responseJson(ctx, 200, user) : responseJson(ctx, 404);
+    } catch (error) {
+      console.error('create user error', error);
+      responseJson(ctx, 10000, error);
+    }
   }
 
   async info(ctx: Context) {
     try {
-      const ss: any = await Users.findOne({ where: { name: 'hulin' } });
-      responseJson(ctx, 200, ss.dataValues);
+      const user = await Users.findOne({ where: { id: ctx.query.id }, raw: true });
+      return user ? responseJson(ctx, 200, user) : responseJson(ctx, 404);
     } catch (error) {
-      responseJson(ctx, 200, error);
+      console.error('get user info error', error);
+      responseJson(ctx, 10000, error);
     }
   }
 

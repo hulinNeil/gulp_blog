@@ -1,6 +1,7 @@
-import Koa, { Context } from 'koa';
+import { Context } from 'koa';
 import { responseJson } from '../../utils';
 import Users from '../../models/Users';
+import { Op } from 'sequelize';
 
 class UserController {
   async login(ctx: Context) {
@@ -24,12 +25,18 @@ class UserController {
 
   async register(ctx: Context) {
     try {
-      console.log(ctx.request.body);
-      const { name, email, phone } = ctx.request.body;
-      // 这里需要手动校验name和email是否存在，存在的话返回false，否则会直接抛出错误
-      const user = await Users.create({ name, email, phone });
-      console.log(user);
-      return user ? responseJson(ctx, 200, user) : responseJson(ctx, 404);
+      const { name, email, phone, password } = ctx.request.body;
+      const subsistentUser = await Users.findOne({
+        where: {
+          [Op.or]: { name, email, phone },
+        },
+        raw: true,
+      });
+      if (subsistentUser) {
+        return responseJson(ctx, 10003);
+      }
+      const user = await Users.create({ name, email, phone, password: password || 'admin123456' });
+      return user ? responseJson(ctx, 200) : responseJson(ctx, 404);
     } catch (error) {
       console.error('create user error', error);
       responseJson(ctx, 10000, error);

@@ -16,7 +16,7 @@ const responseJson = (ctx: ExtendableContext, status: number = 200, result: Obje
   ctx.body = {
     status,
     message,
-    result: { ...result },
+    data: { ...result },
     timestamp: getCurDateTime(),
   };
 };

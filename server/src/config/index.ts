@@ -9,6 +9,11 @@ const config = {
     database: process.env.DB_NAME, // dhome_data_dev
   },
   port: process.env.PORT || 4000,
+  email: {
+    service: process.env.EMAIL_SERVICE,
+    user: process.env.EMAIL_USER,
+    password: process.env.EMAIL_PASS,
+  },
 };
 
 export default config;

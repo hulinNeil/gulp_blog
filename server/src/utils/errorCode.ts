@@ -3,7 +3,7 @@ const errMsg = {
   404: 'not found',
   10000: 'service internal error',
   10001: 'the code has expired',
-  10003: 'the phone/email is exist',
+  10003: 'the name/phone/email is exist',
   10004: 'failed to send OTP',
   10005: 'login has expired',
   10006: 'building info data acquisition failure',

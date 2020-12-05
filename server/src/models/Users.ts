@@ -6,6 +6,7 @@ class Users extends Model {
   public name!: string;
   public email!: string;
   public phone: number;
+  public password!: string;
   public readonly createdAt!: Date;
   public readonly updatedAt: Date;
 }
@@ -24,6 +25,9 @@ Users.init(
       type: DataTypes.INTEGER,
     },
     phone: {
+      type: DataTypes.INTEGER,
+    },
+    password: {
       type: DataTypes.INTEGER,
     },
   },

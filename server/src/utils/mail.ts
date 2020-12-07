@@ -15,6 +15,10 @@ const emailTransport = nodemailer.createTransport({
 });
 
 class emailService {
+  static async sendRegisterSuccess(email: string, name: string, password: string) {
+    this.sendHtmlEmail([email], 'Welcom to Your Blog', 'registerSuccess', { name, password });
+  }
+
   static async sendTextEmail(emails: string[], title: string, content: string) {
     const mailOptions: any = {
       from: user,
@@ -25,20 +29,19 @@ class emailService {
     emailTransport.sendMail(mailOptions);
   }
 
-  static async sendHtmlEmail(emails: string[], title: string, templateName: string) {
+  static async sendHtmlEmail(emails: string[], title: string, templateName: string, data?: any) {
     const templatePath = path.resolve(__dirname, `./emailTemplates/${templateName}.ejs`);
     const template = ejs.compile(fs.readFileSync(templatePath, { encoding: 'utf-8' }));
-    const html = template({ name: '--------' });
+    const html = template(data);
     const mailOptions: any = {
       from: user,
       to: emails,
       subject: title,
       html: html,
     };
-    const result: any = { code: 200, message: 'send success', data: [] };
+    const result = { code: 200, message: 'send success' };
     try {
-      const ss = await emailTransport.sendMail(mailOptions);
-      console.log('============', ss);
+      await emailTransport.sendMail(mailOptions);
     } catch (e) {
       result.code = 500;
       result.message = e;

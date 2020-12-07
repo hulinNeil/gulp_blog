@@ -1,11 +1,19 @@
 import { Context } from 'koa';
-import { responseJson } from '../../utils';
+import { emailService, responseJson } from '../../utils';
 import Users from '../../models/Users';
 import { Op } from 'sequelize';
+import { LoginParams, RegisterParams } from './interface';
 
 class UserController {
   async login(ctx: Context) {
-    responseJson(ctx, 200, 'data');
+    const { username, password } = ctx.request.body as LoginParams;
+    try {
+      const user = await Users.findOne({ where: { name: username, password }, raw: true });
+      return user ? responseJson(ctx, 200, user) : responseJson(ctx, 404, 'account password error.');
+    } catch (error) {
+      console.error('login error', error);
+      responseJson(ctx, 10000, error);
+    }
   }
   async logout(ctx: Context) {
     responseJson(ctx, 200, 'data');
@@ -25,7 +33,7 @@ class UserController {
 
   async register(ctx: Context) {
     try {
-      const { name, email, phone, password } = ctx.request.body;
+      const { name, email, phone, password } = ctx.request.body as RegisterParams;
       const subsistentUser = await Users.findOne({
         where: {
           [Op.or]: { name, email, phone },
@@ -35,7 +43,11 @@ class UserController {
       if (subsistentUser) {
         return responseJson(ctx, 10003);
       }
-      const user = await Users.create({ name, email, phone, password: password || 'admin123456' });
+      const passwordSync = password || 'admin123456';
+      const user = await Users.create({ name, email, phone, password: passwordSync });
+      if (user) {
+        emailService.sendRegisterSuccess(email, name, passwordSync);
+      }
       return user ? responseJson(ctx, 200) : responseJson(ctx, 404);
     } catch (error) {
       console.error('create user error', error);

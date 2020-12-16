@@ -19,6 +19,10 @@ class emailService {
     this.sendHtmlEmail([email], 'Welcom to Your Blog', 'registerSuccess', { name, password });
   }
 
+  static async sendOtp(email: string, otp: string) {
+    this.sendHtmlEmail([email], 'Neil Blog', 'sendOTP', { otp });
+  }
+
   static async sendTextEmail(emails: string[], title: string, content: string) {
     const mailOptions: any = {
       from: user,

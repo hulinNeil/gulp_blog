@@ -8,6 +8,9 @@ const config = {
     password: process.env.DB_PASS, // futurify101
     database: process.env.DB_NAME, // dhome_data_dev
   },
+  redis: {
+    host: process.env.REDIS_HOST,
+  },
   port: process.env.PORT || 4000,
   email: {
     service: process.env.EMAIL_SERVICE,

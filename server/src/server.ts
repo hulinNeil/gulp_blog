@@ -1,6 +1,7 @@
 import config from './config';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
+import { logger } from './utils';
 import routes from './routes';
 import serve from 'koa-static';
 import * as path from 'path';
@@ -34,9 +35,9 @@ app.use(
 );
 
 app.on('error', (err) => {
-  console.log('sevice error', err);
+  logger.error('sevice error', err);
 });
 
 app.listen(config.port, () => {
-  console.log(`App is running on ${config.port}`);
+  logger.info(`App is running on ${config.port}`);
 });

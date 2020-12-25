@@ -5,11 +5,16 @@ import routes from './routes';
 import serve from 'koa-static';
 import * as path from 'path';
 import { koaSwagger } from 'koa2-swagger-ui';
+import traceMiddleware from './middleware/trace';
+import httpRequestContext from 'http-request-context';
 
 const app = new Koa();
 
 // 加载 body 中间件
 app.use(bodyParser());
+// 添加 trace 中间件
+app.use(httpRequestContext.koaMiddleware());
+app.use(traceMiddleware);
 
 // 加载路由
 routes(app);
@@ -28,9 +33,9 @@ app.use(
   })
 );
 
-// app.on('error', (err) => {
-//   console.log('server error', err);
-// });
+app.on('error', (err) => {
+  console.log('sevice error', err);
+});
 
 app.listen(config.port, () => {
   console.log(`App is running on ${config.port}`);
